@@ -2,23 +2,45 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-//Front-end
+
+
+//===============================FRONT END=====================================
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 
 //Side bar menu Cate and Brand
-Route::get('/danh-muc-san-pham','HomeController@getCategory');
-Route::get('/brand','HomeController@getBrand');
+Route::get('/brand/{brand_id}','Brand@getBrand');
+Route::get('/danh-muc-san-pham/{category_id}','CategoryProduct@getCategory');
+
+//Detail 
+Route::get('/chi-tiet-san-pham/{produc_id}','Product@getProductDetail');
+
+//Cart 
+//Route::post('/save-cart','CartController@saveCart');
+Route::post('/add-to-cart','CartController@addToCart');
+Route::get('/check-out','CartController@showCart'); 
+Route::get('/delete-cart/{session_id}','CartController@deleteCart');
+Route::post('update-cart','CartController@updateCart');
+Route::post('check-coupon','CartController@checkCoupon');
+
+//product
+Route::get('/product','Product@getAllProduct');
+
+//tim kiem
+Route::get('/tim-kiem','HomeController@search');
+Route::post('/ket-qua-tim-kiem','HomeController@searchResult');
+
+
+//send mail
+Route::get('/send-mail','MailController@sendMail');
+
+
+
+
+
+
+
+
 
 
 // ===============================BACK END=====================================
@@ -28,7 +50,8 @@ Route::get('/dashboard', 'AdminController@dashboard');
 Route::post('/admin-dashboard', 'AdminController@loginDashboard');
 Route::get('/logout', 'AdminController@logOut');
 
-// Category
+
+ // Category
 Route::get('/add-category', 'CategoryProduct@addCategory');
 Route::get('/list-category', 'CategoryProduct@listCategory');
 Route::post('/save-category', 'CategoryProduct@saveCategory');
@@ -63,6 +86,24 @@ Route::get('/active-product/{product_id}', 'Product@activeProduct');
 Route::get('/edit-product/{product_id}', 'Product@editProduct');
 Route::get('/delete-product/{product_id}', 'Product@deleteProduct');
 Route::post('/update-product/{product_id}','Product@updateProduct');
+
+//Coupon
+Route::get('/add-coupon', 'CouponController@addCoupon');
+Route::get('/list-coupon', 'CouponController@listCoupon');
+Route::post('/save-coupon', 'CouponController@saveCoupon');
+
+Route::get('/unactive-coupon/{cp_id}', 'CouponController@unactiveCoupon');
+Route::get('/active-coupon/{cp_id}', 'CouponController@activeCoupon');
+
+Route::get('/delete-coupon/{cp_id}', 'CouponController@deleteCoupon');
+Route::post('/update-coupon/{cp_id}','CouponController@updateCoupon');
+
+//Delivery
+Route::get('/delivery', 'DeliveryController@delivery');
+Route::post('/select-delivery', 'DeliveryController@selectDelivery');
+Route::post('/save-delivery', 'DeliveryController@saveDelivery');
+Route::post('/select-feeship','DeliveryController@selectFeeship');
+
 
 
 

@@ -2,7 +2,7 @@
 @section('adminContent')
     <div class="panel panel-default">
         <div class="panel-heading">
-            Liệt kê danh mục
+            Liệt kê thương hiệu
         </div>
         <?php
         $message = Session::get('message');
@@ -48,22 +48,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($listCategory as $key => $cate)
+                    @foreach ($listCategory as $key => $value)
                         <tr>
                             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
-                            <td>{{ $cate->cate_name }}</td>
+                            <td>{{ $value->cate_name }}</td>
                             <td><span class="text-ellipsis">
                                     <?php
-                if($cate->cate_status == 1) {
+                if($value->cate_status == 1) {
                     ?>
-                                    <a href="{{ URL::to('/unactive-category/' . $cate->cate_id) }}"><span
+                                    <a href="{{ URL::to('/unactive-category/' . $value->cate_id) }}"><span
                                             class="fa-thumb-styling fa fa-thumbs-up"
                                             style="font-size:28px;color:green"></span></a>
                                     <?php   
                 }
                 else{
                     ?>
-                                    <a href="{{ URL::to('/active-category/' . $cate->cate_id) }}"><span
+                                    <a href="{{ URL::to('/active-category/' . $value->cate_id) }}"><span
                                             class="fa-thumb-styling fa fa-thumbs-down"
                                             style="font-size:28px;color:red"></span></a>
                                     <?php
@@ -72,11 +72,11 @@
                                 </span></td>
 
                             <td>
-                                <a href="{{URL::to('/edit-category/'.$cate->cate_id)}}" class="active" ui-toggle-class="">
+                                <a href="{{URL::to('/edit-category/'.$value->cate_id)}}" class="active" ui-toggle-class="">
                                     <i class="fa fa-pencil-square-o text-success text-active" style="font-size:20px"></i></a>
                             </td>
                             <td>
-                                <a onclick="return confirm('Are you fuckin sure about das?')" href="{{URL::to('/delete-category/'.$cate->cate_id)}}" class="active" ui-toggle-class="">
+                                <a onclick="return confirm('Are you fuckin sure about das?')" href="{{URL::to('/delete-category/'.$value->cate_id)}}" class="active" ui-toggle-class="">
                                     <i class="fa fa-times text-danger text" style="font-size:20px"></i></a>
                                 </td>     
                             
@@ -89,9 +89,10 @@
             <div class="row">
 
                 <div class="col-sm-5 text-center">
-                    <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
+                    <small class="text-muted inline m-t-sm m-b-sm"></small>
                 </div>
-                <div class="col-sm-7 text-right text-center-xs">
+                <span>{{$listCategory->links('pagination::bootstrap-4') }}</span>
+                {{-- <div class="col-sm-7 text-right text-center-xs">
                     <ul class="pagination pagination-sm m-t-none m-b-none">
                         <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
                         <li><a href="">1</a></li>
@@ -100,7 +101,7 @@
                         <li><a href="">4</a></li>
                         <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
                     </ul>
-                </div>
+                </div> --}}
             </div>
         </footer>
     </div>

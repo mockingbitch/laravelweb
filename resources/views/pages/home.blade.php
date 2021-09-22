@@ -79,14 +79,17 @@
 			</div>
 			<div class="row">
 				@foreach ($product as $key => $value)
-				<div class="col-md-3">
-					<div class="fh5co-blog animate-box">
-						<a href="#"><img class="img-responsive" src="{{url('public/uploads/product')}}/{{$value->pr_img}}" alt=""></a>
-						<div class="blog-text">
-							<h3><a href="#">{{$value->pr_name}}</a></h3>
-						</div> 
+				
+					<div class="col-md-3">
+						<div class="fh5co-blog animate-box">
+							<a href="{{ URL::to('/chi-tiet-san-pham/' . $value->pr_id) }}"><img class="img-responsive" src="{{URL::to('public/uploads/product/'.$value->pr_img)}}" alt=""></a>
+							<div class="blog-text">
+								<h3><a href="{{ URL::to('/chi-tiet-san-pham/' . $value->pr_id) }}">{{$value->pr_name}}</a></h3>
+								<h4><a href="{{ URL::to('/chi-tiet-san-pham/' . $value->pr_id) }}">{{number_format($value->pr_price).' VND'}}</a></h4>
+							</div> 
+						</div>
 					</div>
-				</div>
+			
 				@endforeach
 			</div>
 		</div>

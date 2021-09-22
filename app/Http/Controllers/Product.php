@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-
+use App\Models\ProductModel;
+session_start();
 class Product extends Controller
 {
     public function AuthLogin(){
@@ -18,11 +19,9 @@ class Product extends Controller
         else{
             return Redirect::to('admin')->send();
         }
-        
     }
     
     public function addProduct(){
-        
         $this->AuthLogin();
         $cate_pr = DB::table('tbl_category')->orderby('cate_id','desc')->get();
         $brand_pr = DB::table('tbl_brand')->orderby('br_id','desc')->get();
@@ -113,5 +112,35 @@ class Product extends Controller
         Session::put('message','Cập nhật sản phẩm thành công');
         return Redirect::to('list-product');
 
+    }
+     //=============================================END DASHBOARD PAGE===============================================
+    
+
+
+     //=============================================FRONT END PAGE==================================================
+    public function getProductDetail($product_id){
+        $cate_pr = DB::table('tbl_category')->where('cate_status','1')->orderby('cate_id','desc')->get();
+        $brand_pr = DB::table('tbl_brand')->where('br_status','1')->orderby('br_id','desc')->get();
+        $product_detail = DB::table('tbl_product')
+        ->join('tbl_category','tbl_product.cate_id','=','tbl_category.cate_id')
+        ->join('tbl_brand','tbl_brand.br_id','=','tbl_product.br_id')
+        ->where('tbl_product.pr_id',$product_id)->get();
+        foreach($product_detail as $key => $value)
+        {
+            $category_id = $value->cate_id;
+        }
+        $related_product = DB::table('tbl_product')
+        ->join('tbl_category','tbl_product.cate_id','=','tbl_category.cate_id')
+        ->join('tbl_brand','tbl_brand.br_id','=','tbl_product.br_id')
+        ->where('tbl_category.cate_id',$category_id)->whereNotIn('tbl_product.pr_id',[$product_id])->get();
+        return view('pages.product.productdetail')->with('category', $cate_pr)->with('brand', $brand_pr)
+        ->with('product_detail',$product_detail)->with('related_product',$related_product);
+    }
+    public function getAllProduct(){
+         
+        $cate_pr = DB::table('tbl_category')->where('cate_status','1')->orderby('cate_id','desc')->get();
+        $brand_pr = DB::table('tbl_brand')->where('br_status','1')->orderby('br_id','desc')->get();
+        $product = DB::table('tbl_product')->get();
+        return view('pages.product.allproduct')->with('category', $cate_pr)->with('brand', $brand_pr)->with('product',$product);
     }
 }

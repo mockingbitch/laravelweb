@@ -29,10 +29,16 @@ class AdminController extends Controller
         return view('admin.dashboard');     
     }
     public function loginDashboard(Request $request){
-        $ad_email = $request->ad_email;
-        $ad_password = md5($request->ad_password);
+        $data = $request->validate([
+            'ad_email'=>'required',
+            'ad_password'=>'required',
+        ]);
+
+        $ad_email = $data['ad_email'];
+        $ad_password = md5($data['ad_password']);
         $result = DB::table('tbl_admin')->where('ad_email',$ad_email)->where('ad_password',$ad_password)->first();
         if($result){
+          //  $login_count = $result->count();
             Session::put('ad_name',$result->ad_name);
             Session::put('ad_id',$result->ad_id);
             return Redirect::to('/dashboard');

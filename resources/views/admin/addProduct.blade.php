@@ -1,5 +1,6 @@
 @extends('adminLayout')
 @section('adminContent')
+
     <div class="row">
         <div class="col-lg-12">
             <section class="panel">
@@ -19,7 +20,9 @@
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Tên sản phẩm</label>
-                                <input type="text" name="pr_name" class="form-control" id="exampleInputEmail1"
+                                <input data-validation="length" data-validation-length="max20"
+                                data-validation-error-msg="Nhập ít hơn 20 ký tự"
+                                type="text" name="pr_name" class="form-control" id="exampleInputEmail1"
                                     placeholder="Thêm tên danh mục">
                             </div>
                             <div class="form-group">
@@ -48,12 +51,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Thông tin chi tiết</label>
-                                <textarea style="resize:none" rows="12" class="form-control" id="exampleInputPassword1"
+                                <textarea style="resize:none" rows="12" class="form-control" id="ckeditor2"
                                     name="pr_content" placeholder="Mô tả danh mục"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Giá sản phẩm</label>
-                                <input type="text" name="pr_price" class="form-control" id="exampleInputEmail1"
+                                <input type="text" data-validation="number" name="pr_price" class="form-control" id="exampleInputEmail1"
                                     placeholder="Thêm tên danh mục">
                             </div>
                             <div class="form-group">
